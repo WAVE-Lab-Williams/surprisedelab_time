@@ -75,30 +75,16 @@ function runSingleTrial(
     console.log(`Where the top of the image will be positioned target_y_random: ${target_y_random}`)
     console.log(`target_height: ${target_height}`)
 
-
-    // var slider_start = 70;
-    var slider_start = 20;
-    var slider_min = 20;
-    var slider_max = 120;
-
-    var dispImgSlider = {
-        type: jsPsychHtmlSliderResponseResizing,
-        stimulus: `<img src="${sliderStim}" />`,
-        slider_start: slider_start,
-        min: slider_min,
-        max: slider_max,
-        slider_width: 500,
-        labels: ["smallest","largest"],
-        trial_duration: null,
-        response_ends_trial: true,
-        prompt: `${persistent_prompt}`,
+    var holdResponse = {
+        type: jsPsychHtmlButtonHoldResponse,
+        stimulus: `Now please try to <b>reproduce how long</b> the image stayed on screen. Click and hold down the button below to do so.<p>For example, if you thought the image stayed on screen for 5 seconds, try your best to click and hold the button for five seconds.</p> <p>Releasing the button will <b>automatically submit</b> your response!</p><p>You have <b>only ONE try!</b></p>`,
+        choices: ["Click, hold, and release this button for the right amount of time!"],
+        show_hold_duration_feedback: false,
+        retries_allowed: null, // change to a number of allowed retries. Default is null.
         data: {
             trial_category: 'answer'+trialType,
             trial_stimulus: thisStim,
-            correct_response: tar_size,
-            slider_start: slider_start,
-            min: slider_min,
-            max: slider_max,
+            correct_response: dispDuration,
             person_race: personRace,
             person_sex: personSex,
             person_variation: personVariation,
@@ -107,9 +93,9 @@ function runSingleTrial(
             target_y_position: target_y_random,
         }, // data end
         on_finish: function(data){
-            data.thisDifference = data.response - tar_size
+            data.thisDifference = data.hold_duration - data.correct_response
         } // on finish end
-    }; // dispCircle end
+    }; // holdResponse end
 
     var dispImg = {
         type: jsPsychHtmlKeyboardResponse,
@@ -140,7 +126,8 @@ function runSingleTrial(
 
      var poststim = {
         type: jsPsychHtmlKeyboardResponse,
-        stimulus: `${persistent_prompt}`,
+        // stimulus: `${persistent_prompt}`,
+        stimulus: ``,
         choices: "NO_KEYS",
         trial_duration: POSTSTIM_DISP_TIME,
         data: {
@@ -168,7 +155,7 @@ function runSingleTrial(
     timelineTrialsToPush.push(dispImg);
     timelineTrialsToPush.push(poststim)
     timelineTrialsToPush.push(cursor_on);
-    timelineTrialsToPush.push(dispImgSlider);
+    timelineTrialsToPush.push(holdResponse);
 
 
 }
