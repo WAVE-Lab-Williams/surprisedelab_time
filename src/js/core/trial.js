@@ -77,7 +77,7 @@ function runSingleTrial(
 
     var holdResponse = {
         type: jsPsychHtmlButtonHoldResponse,
-        stimulus: `Now please try to <b>reproduce how long</b> the image stayed on screen. Click and hold down the button below to do so.<p>For example, if you thought the image stayed on screen for 5 seconds, try your best to click and hold the button for five seconds.</p> <p>Releasing the button will <b>automatically submit</b> your response!</p><p>You have <b>only ONE try!</b></p>`,
+        stimulus: `Now please try to <b>reproduce how long</b> the image stayed on screen. Click and hold down the button below to do so.<p>For example, if you thought the image stayed on screen for 5 seconds, try your best to click and hold the button for five seconds, then release the button.</p> <p>Releasing the button will <b>automatically submit</b> your response!</p><p>You have <b>only ONE try!</b></p>`,
         choices: ["Click, hold, and release this button for the right amount of time!"],
         show_hold_duration_feedback: false,
         retries_allowed: null, // change to a number of allowed retries. Default is null.
