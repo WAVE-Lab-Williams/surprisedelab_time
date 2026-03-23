@@ -174,6 +174,9 @@ var jsPsychHtmlButtonHoldResponse = (function (jspsych) {
       // ── Inject styles ───────────────────────────────────────────────────────
       const styleEl = document.createElement("style");
       styleEl.textContent = `
+        .jspsych-html-button-hold-response-button .jspsych-btn {
+          font-size: 1.2em;
+        }
         .jspsych-btn-held {
           filter: brightness(0.8);
           transform: scale(0.97);
