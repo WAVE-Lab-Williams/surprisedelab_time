@@ -242,9 +242,9 @@ EXPERIMENT SECTION (*sec_expt)
 // var poss_people_race = ["A","B","L","W"]
 // var poss_people_sex = ["M","F"];
 var poss_people_race = ["W"]
-var poss_people_sex = ["M"];
+var poss_people_sex = ["M","F"];
 var poss_people_variation = ["1","2","3","4","5"];
-var poss_disp_duration = [500];
+var poss_disp_duration = [1500];
 
 var factors = {
     people_race: poss_people_race,

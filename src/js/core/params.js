@@ -17,7 +17,7 @@ var rectangleVer = true;
 
 // Defining Core Variables that remain constant
 var PRESTIM_DISP_TIME = 700;
-var FIXATION_DISP_TIME = 500;
+var FIXATION_DISP_TIME = 700;
 var POSTSTIM_DISP_TIME = 500;
 
 // Variables for Participant Information
