@@ -154,6 +154,7 @@ function processTrialData(data) {
             person_disp_duration: data.person_disp_duration,
             target_x_position: data.target_x_position,
             target_y_position: data.target_y_position,
+            true_trial_count: data.true_trial_count,
             stimulus_duration: data.trial_duration,
             time_elapsed: data.time_elapsed,
             timestamp: data.timestamp,
