@@ -77,7 +77,8 @@ function runSingleTrial(
 
     var holdResponse = {
         type: jsPsychHtmlButtonHoldResponse,
-        stimulus: `Now please try to <b>reproduce how long</b> the image stayed on screen. Click and hold down the button below for the same amount of time that you saw the image. <p>Releasing the button will <b>automatically submit</b> your response!</p><p>You have <b>only ONE try!</b></p>`,
+        // stimulus: `Now please try to <b>reproduce how long</b> the image stayed on screen. Click and hold down the button below for the same amount of time that you saw the image. <p>Releasing the button will <b>automatically submit</b> your response!</p><p>You have <b>only ONE try!</b></p>`,
+        stimulus: `Now try to replicate how long the image was on screen:`,
         choices: ["Click, hold, and release this button for the right amount of time!"],
         show_hold_duration_feedback: false,
         retries_allowed: null, // change to a number of allowed retries. Default is null.
@@ -201,8 +202,6 @@ function runSingleTrial(
     timelineTrialsToPush.push(poststim)
     timelineTrialsToPush.push(cursor_on);
     timelineTrialsToPush.push(holdResponse);
-    timelineTrialsToPush.push(sexJudge);
-
-
+    // timelineTrialsToPush.push(sexJudge);
 }
 

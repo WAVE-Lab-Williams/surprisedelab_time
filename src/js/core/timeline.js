@@ -166,20 +166,41 @@ INSTR PROCEDURE (*sec_instr)
 
 
 // // make sure to load any images you need for the demo itself. Usually you have different demo images than the main expt, such that you don't give away the content of the expt itself (but still give the participant practice and familiarity with the task. In this case, though, the demo images themselves are identical to the main expt. Variable names are the only difference.
-// var demo_image = ["demo"];
-// var demo_display_durations = [200, 500];
-// forPreload.push(`${stimFolder}demo-1.png`);
+var demo_image_race= ["demo"];
+var demo_image_sex= ["gray"]
+var demo_image_variation = ["rectangle"]
+var demo_display_durations = [1000];
+forPreload.push(`${stimFolder}${demo_image_race}${demo_image_sex}-${demo_image_variation}.png`);
 
-// //decide what the parameters for the demo trial should be. Sometimes you hardcode this, sometimes you randomly choose from the options you defined above.
-// var thisDemoImage = randomChoice(demo_image,1)[0];
-// var thisDemoDispDuration = randomChoice(demo_display_durations,1)[0];
+//decide what the parameters for the demo trial should be. Sometimes you hardcode this, sometimes you randomly choose from the options you defined above.
+var thisDemoDispDuration = randomChoice(demo_display_durations,1)[0];
 
 /* -------  Push Instr + Demo Trials to timeline_instr (*push_instr) -------------- */
 var instrContent = loadInstrContent();
 
-var instructions = {
+// // single trial version
+// var instructions = {
+//     type: jsPsychInstructions,
+//     pages: instrContent,
+//     show_clickable_nav: true,
+//     allow_keys: false,
+//     allow_backward: false,
+//     delay_time: function(){
+//         const calculated_delays = [];
+//         for (let i = 0; i < instrContent.length; i++) {
+//             calculated_delays.push(calculate_delay_time(count_words(instrContent[i]),60));
+//         }
+//         return calculated_delays
+//     }, // end delay_time
+// };
+// timelineinstr.push(instructions);
+
+var demoTrialIndex = 2; // this should be the number of the instructions where you want the demo to appear RIGHT BEFORE
+var [instrContent_beforedemo,instrContent_afterdemo] = cutArray(instrContent,demoTrialIndex);
+
+var instructions_precut = {
     type: jsPsychInstructions,
-    pages: instrContent,
+    pages: instrContent_beforedemo,
     show_clickable_nav: true,
     allow_keys: false,
     allow_backward: false,
@@ -192,44 +213,26 @@ var instructions = {
     }, // end delay_time
 };
 
-// var demoTrialIndex = 3;
-// var [instrContent_beforedemo,instrContent_afterdemo] = cutArray(instrContent,demoTrialIndex);
+var instructions_postcut = {
+    type: jsPsychInstructions,
+    pages: instrContent_afterdemo,
+    show_clickable_nav: true,
+    allow_keys: false,
+    allow_backward: false,
+    delay_time: function(){
+        const calculated_delays = [];
+        for (let i = demoTrialIndex; i < instrContent.length; i++) {
+            calculated_delays.push(calculate_delay_time(count_words(instrContent[i]),60));
+        }
+        return calculated_delays
+    }, // end delay_time
+};
 
-// var instructions1 = {
-//     type: jsPsychInstructions,
-//     pages: instrContent_beforedemo,
-//     show_clickable_nav: true,
-//     allow_keys: false,
-//     allow_backward: false,
-//     delay_time: function(){
-//         const calculated_delays = [];
-//         for (let i = 0; i < instrContent.length; i++) {
-//             calculated_delays.push(calculate_delay_time(count_words(instrContent[i]),60));
-//         }
-//         return calculated_delays
-//     }, // end delay_time
-// };
+timelineinstr.push(instructions_precut);
+runSingleTrial(demo_image_race,demo_image_sex,demo_image_variation,thisDemoDispDuration,timelineinstr,"prac") // pushesyour demo trial
+timelineinstr.push(instructions_postcut);
 
-// var instructions2 = {
-//     type: jsPsychInstructions,
-//     pages: instrContent_afterdemo,
-//     show_clickable_nav: true,
-//     allow_keys: false,
-//     allow_backward: false,
-//     delay_time: function(){
-//         const calculated_delays = [];
-//         for (let i = demoTrialIndex; i < instrContent.length; i++) {
-//             calculated_delays.push(calculate_delay_time(count_words(instrContent[i]),60));
-//         }
-//         return calculated_delays
-//     }, // end delay_time
-// };
 
-// timelineinstr.push(instructions1);
-// runSingleTrial(thisDemoCircle,thisDemoDispDuration,timelineinstr,"prac") // pushesyour demo trial
-// timelineinstr.push(instructions2);
-
-timelineinstr.push(instructions);
 
 /*
 ===============================================================
@@ -243,8 +246,8 @@ EXPERIMENT SECTION (*sec_expt)
 // var poss_people_sex = ["M","F"];
 var poss_people_race = ["W"]
 var poss_people_sex = ["F","M"];
-var poss_people_variation = ["1","2","3","4","5"];
-var poss_disp_duration = [500,1500];
+var poss_people_variation = ["1","2","3","4"]; // normally is 1-5
+var poss_disp_duration = [500,750,1000,1250,1500];
 
 var factors = {
     people_race: poss_people_race,
@@ -265,11 +268,10 @@ for (var i = 0; i < poss_people_race.length; i++) {
     } // end j loop
 } // end i loop
 
-forPreload.push(`${stimFolder}gray_rectangle.png`);
 
 /* ------- timeline expt push (*pushExpt ) -------------- */
-// for (var elem = 0; elem < full_design.length; elem++) {
-for (var elem = 0; elem < 1; elem++) {
+for (var elem = 0; elem < full_design.length; elem++) {
+// for (var elem = 0; elem < 1; elem++) {
     runSingleTrial(
         full_design[elem].people_race,
         full_design[elem].people_sex,
