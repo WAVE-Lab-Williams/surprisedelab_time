@@ -246,7 +246,7 @@ EXPERIMENT SECTION (*sec_expt)
 // var poss_people_sex = ["M","F"];
 var poss_people_race = ["W"]
 var poss_people_sex = ["F","M"];
-var poss_people_variation = ["1","2","3","4"];
+var poss_people_variation = ["1","2","3","4"]; // normally is 1-5
 var poss_disp_duration = [500,750,1000,1250,1500];
 
 var factors = {
