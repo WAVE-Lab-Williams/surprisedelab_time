@@ -229,7 +229,7 @@ var instructions_postcut = {
 };
 
 timelineinstr.push(instructions_precut);
-runSingleTrial(demo_image_race,demo_image_sex,demo_image_variation,0,thisDemoDispDuration,timelineinstr,"prac") // pushesyour demo trial
+runSingleTrial(demo_image_race,demo_image_sex,demo_image_variation,thisDemoDispDuration,0,timelineinstr,"prac") // pushesyour demo trial
 timelineinstr.push(instructions_postcut);
 
 
