@@ -169,7 +169,7 @@ INSTR PROCEDURE (*sec_instr)
 var demo_image_race= ["demo"];
 var demo_image_sex= ["gray"]
 var demo_image_variation = ["rectangle"]
-var demo_display_durations = [1000];
+var demo_display_durations = [2000];
 forPreload.push(`${stimFolder}${demo_image_race}${demo_image_sex}-${demo_image_variation}.png`);
 
 //decide what the parameters for the demo trial should be. Sometimes you hardcode this, sometimes you randomly choose from the options you defined above.
@@ -229,7 +229,7 @@ var instructions_postcut = {
 };
 
 timelineinstr.push(instructions_precut);
-runSingleTrial(demo_image_race,demo_image_sex,demo_image_variation,thisDemoDispDuration,timelineinstr,"prac") // pushesyour demo trial
+runSingleTrial(demo_image_race,demo_image_sex,demo_image_variation,0,thisDemoDispDuration,timelineinstr,"prac") // pushesyour demo trial
 timelineinstr.push(instructions_postcut);
 
 
@@ -277,6 +277,7 @@ for (var elem = 0; elem < full_design.length; elem++) {
         full_design[elem].people_sex,
         full_design[elem].people_variation,
         full_design[elem].disp_duration,
+        elem,
         timelineexpt,
         'expt',
     );

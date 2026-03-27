@@ -8,6 +8,7 @@ function runSingleTrial(
     personSex,
     personVariation,
     dispDuration,
+    trueTrialCount,
     timelineTrialsToPush,
     trialType,
 ) {
@@ -92,6 +93,7 @@ function runSingleTrial(
             person_disp_duration: dispDuration,
             target_x_position: target_x_random,
             target_y_position: target_y_random,
+            true_trial_count: trueTrialCount,
         }, // data end
         on_finish: function(data){
             data.thisDifference = data.hold_duration - data.correct_response
