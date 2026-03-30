@@ -48,16 +48,7 @@ function runSingleTrial(
     };
 
     /*--------------------------- Experiment specific variables ---------------------------*/
-    if (rectangleVer == true){
-        var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`
-        var sliderStim = `${stimFolder}gray_rectangle.png`
-        var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Now use the slider below (you can click and drag the slider) to make the gray rectangle match the exact size of the image you just saw to the best of your ability. We know this is hard, do your best! (The "Continue" button is at the bottom of the page)</div>`;
-    } else {
-        var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`
-        var sliderStim = `${stimFolder}gray_rectangle.png`
-        var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Now use the slider below (you can click and drag the slider) to recreate the exact size of the image you just saw, to the best of your ability. Do your best! (The "Continue" button is at the bottom of the page)</div>`;
-    }
-
+    var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`
     /* target image size */
     // let tar_size = randomIntFromRange(40, 100);
     let tar_size = 100;
@@ -77,10 +68,10 @@ function runSingleTrial(
     console.log(`target_height: ${target_height}`)
 
     var holdResponse = {
-        type: jsPsychHtmlButtonHoldResponse,
+        type: jsPsychHtmlButtonSpaceHoldResponse,
         // stimulus: `Now please try to <b>reproduce how long</b> the image stayed on screen. Click and hold down the button below for the same amount of time that you saw the image. <p>Releasing the button will <b>automatically submit</b> your response!</p><p>You have <b>only ONE try!</b></p>`,
-        stimulus: `Now try to replicate how long the image was on screen:`,
-        choices: ["Click, hold, and release this button for the right amount of time!"],
+        stimulus: `Now try to replicate how long the image was on screen (Use the <u>Spacebar</u>):`,
+        choices: ["Click, hold, and release the Spacebar for the right amount of time!"],
         show_hold_duration_feedback: false,
         retries_allowed: null, // change to a number of allowed retries. Default is null.
         data: {
