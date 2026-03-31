@@ -461,6 +461,7 @@ var jsPsychHtmlButtonSpaceHoldResponse = (function (jspsych) {
       // ── Spacebar handlers ────────────────────────────────────────────────────
       const onKeyDown = (e) => {
         if (e.code !== "Space") return;
+        if (e.repeat) return;            // spacebar was already held before this trial started
         if (spacebarDown) return;        // ignore key-repeat
         if (currentPressIndex !== null) return; // another input already active
         e.preventDefault();
