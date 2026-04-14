@@ -4,7 +4,7 @@ Defining Parameter Variables
 ===============================================================
 */
 
-var stimFolder = 'src/assets/stimuli/people_samebody/'
+var stimFolder = 'src/assets/stimuli/faces/'
 
 var runIntro = true;
 var runInstr = true;
@@ -49,8 +49,8 @@ var h =
     document.body.clientHeight;
 
 // setting display image width
-var origWidth = 250;
-var origHeight = 545;
+var origWidth = 300;
+var origHeight = 211;
 var imgWidth = origWidth; // your desired display img width
 var imgHeight = (imgWidth / origWidth) * origHeight;
 
