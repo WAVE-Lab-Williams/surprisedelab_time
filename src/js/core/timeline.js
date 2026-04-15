@@ -168,7 +168,7 @@ INSTR PROCEDURE (*sec_instr)
 // // make sure to load any images you need for the demo itself. Usually you have different demo images than the main expt, such that you don't give away the content of the expt itself (but still give the participant practice and familiarity with the task. In this case, though, the demo images themselves are identical to the main expt. Variable names are the only difference.
 var demo_image_race= ["demo"];
 var demo_image_sex= ["gray"]
-var demo_image_variation = ["rectangle"]
+var demo_image_variation = ["oval"]
 var demo_display_durations = [2000];
 forPreload.push(`${stimFolder}${demo_image_race}${demo_image_sex}-${demo_image_variation}.png`);
 
@@ -245,7 +245,7 @@ EXPERIMENT SECTION (*sec_expt)
 // var poss_people_race = ["A","B","L","W"]
 // var poss_people_sex = ["M","F"];
 // var poss_people_race = randomChoice(["A","B","L"], 1)
-var poss_people_race = ["B"]
+var poss_people_race = ["A","B","L","W"]
 var poss_people_sex = ["F","M"];
 var poss_people_variation = ["1","2","3","4"]; // normally is 1-5
 var poss_disp_duration = [500,750,1000,1250,1500];
