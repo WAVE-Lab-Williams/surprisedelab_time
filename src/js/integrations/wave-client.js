@@ -152,6 +152,7 @@ function processTrialData(data) {
             person_sex: data.person_sex,
             person_variation: data.person_variation,
             person_disp_duration: data.person_disp_duration,
+            screenside_category: data.screenside_category,
             target_x_position: data.target_x_position,
             target_y_position: data.target_y_position,
             true_trial_count: data.true_trial_count,
