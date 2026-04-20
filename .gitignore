@@ -171,7 +171,8 @@ tools/data/*
 temp/
 !.gitkeep
 
-# realigning images folders + extra files for distribution
+# extra temporary files to note back up
 tools/align_body.py
 tools/people_samebody_unrenamed.zip
 tools/run_analyze_experiment.ipynb
+tools/SVP-pilot-analyses-duration-03282026.Rmd
