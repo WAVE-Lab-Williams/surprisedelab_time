@@ -60,6 +60,14 @@ function runSingleTrial(
     let target_x_random = randomIntFromRange(100, w-100-target_width); // accounts for img dims to not go off screen
     let target_y_random = randomIntFromRange(50, h-50-target_height);
 
+    if (target_x_random < w/2) {
+        var screenside_category = "L"
+    } else if (target_x_random >= w/2) {
+        var screenside_category = "R"
+    } else {
+        var screenside_category = "Error"
+    }
+
     console.log(w)
     console.log(`Where the left of the image will be positioned target_x_random: ${target_x_random}`)
     console.log(`target_width: ${target_width}`)
@@ -85,6 +93,7 @@ function runSingleTrial(
             target_x_position: target_x_random,
             target_y_position: target_y_random,
             true_trial_count: trueTrialCount,
+            screenside_category: screenside_category,
         }, // data end
         on_finish: function(data){
             data.thisDifference = data.hold_duration - data.correct_response
