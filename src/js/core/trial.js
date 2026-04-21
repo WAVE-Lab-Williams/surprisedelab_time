@@ -68,12 +68,12 @@ function runSingleTrial(
         var screenside_category = "Error"
     }
 
-    console.log(w)
-    console.log(`Where the left of the image will be positioned target_x_random: ${target_x_random}`)
-    console.log(`target_width: ${target_width}`)
-    console.log(h)
-    console.log(`Where the top of the image will be positioned target_y_random: ${target_y_random}`)
-    console.log(`target_height: ${target_height}`)
+    // console.log(w)
+    // console.log(`Where the left of the image will be positioned target_x_random: ${target_x_random}`)
+    // console.log(`target_width: ${target_width}`)
+    // console.log(h)
+    // console.log(`Where the top of the image will be positioned target_y_random: ${target_y_random}`)
+    // console.log(`target_height: ${target_height}`)
 
     var holdResponse = {
         type: jsPsychHtmlButtonSpaceHoldResponse,

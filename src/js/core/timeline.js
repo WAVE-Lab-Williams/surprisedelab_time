@@ -245,9 +245,10 @@ EXPERIMENT SECTION (*sec_expt)
 // var poss_people_race = ["A","B","L","W"]
 // var poss_people_sex = ["M","F"];
 // var poss_people_race = randomChoice(["A","B","L"], 1)
-var poss_people_race = ["A","B","L","W"]
+var poss_people_race = ["W"]
 var poss_people_sex = ["F","M"];
 var poss_people_variation = ["1","2","3","4"]; // normally is 1-5
+// var poss_people_variation = randomChoice(["1","2","3","4","5"], 2)
 var poss_disp_duration = [500,750,1000,1250,1500];
 
 var factors = {
