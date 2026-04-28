@@ -18,6 +18,43 @@ from wave_client import WaveClient
 from wave_client.models.base import ExperimentTypeCreate
 import pandas as pd
 
+def parse_participant_race(r):
+    """Returns participant_race label derived from race checkboxes, ethnicity, and other_text."""
+    if pd.isna(r):
+        return None
+    try:
+        parsed = pd.json_normalize(eval(r))
+    except Exception:
+        return None
+
+    # Race checkbox(es) — may be a string or list if multiple selected
+    race_val = parsed.get("race", pd.Series([None]))[0]
+    if isinstance(race_val, list):
+        race_val = ", ".join(str(v) for v in race_val if pd.notna(v) and str(v).strip())
+    elif pd.isna(race_val):
+        race_val = None
+
+    # Hispanic/Latino ethnicity (separate from race)
+    ethnicity = parsed.get("ethnicity", pd.Series([None]))[0]
+    is_hispanic = pd.notna(ethnicity) and str(ethnicity).lower() == "yes"
+
+    # "Other" checkbox and the free-text field
+    other_checked = parsed.get("other", pd.Series([None]))[0]
+    has_other = pd.notna(other_checked) and str(other_checked).lower() == "other"
+    other_text = parsed.get("other_text", pd.Series([None]))[0]
+    other_label = str(other_text).strip() if pd.notna(other_text) and str(other_text).strip() else "Other"
+
+    # Determine base race label (other_text takes priority over checkbox value)
+    base_race = other_label if has_other else race_val
+
+    # Prepend "Hispanic" if applicable
+    if is_hispanic and base_race:
+        return f"Hispanic, {base_race}"
+    elif is_hispanic:
+        return "Hispanic"
+    else:
+        return base_race
+
 
 def load_environment_variables(env_file_path: str = ".env") -> Tuple[str, Optional[str], str]:
     """Load and validate environment variables."""
