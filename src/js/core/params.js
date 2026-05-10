@@ -4,7 +4,7 @@ Defining Parameter Variables
 ===============================================================
 */
 
-var stimFolder = 'src/assets/stimuli/window/'
+var stimFolder = 'src/assets/stimuli/people_samebody/'
 
 var runIntro = true;
 var runInstr = true;
