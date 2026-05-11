@@ -48,9 +48,13 @@ var h =
     document.documentElement.clientHeight ||
     document.body.clientHeight;
 
+console.log(w,h);
+
 // setting display image width
-var origWidth = 560;
-var origHeight = 370;
+// var origWidth = 560; // for monitor ver
+// var origHeight = 370; // for monitor ver
+var origWidth = 371; // for samebody ver
+var origHeight = 228; // for samebody ver
 var imgWidth = origWidth
 var imgHeight = ((imgWidth / origWidth) * origHeight)
 
