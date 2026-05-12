@@ -25,7 +25,7 @@ var estTotalRunTime = 6; // was 2 for single trial
 var estDollars = 0.9; // was 0.30 for single trial
 var participantType = 'prolific';
 var completionCode = 'CN955H3L';
-var prolific_url = 'https://app.prolific.co/submissions/complete?cc='+completionCode;
+var prolific_url = 'https://app.prolific.com/submissions/complete?cc='+completionCode;
 
 // WAVE Backend Configuration
 var waveBackendUrl = 'https://wave-backend-production-8781.up.railway.app';
