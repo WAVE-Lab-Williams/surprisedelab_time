@@ -49,8 +49,8 @@ var h =
     document.body.clientHeight;
 
 // setting display image width
-var origWidth = 560;
-var origHeight = 370;
+var origWidth = 533;
+var origHeight = 400;
 var imgWidth = origWidth
 var imgHeight = ((imgWidth / origWidth) * origHeight)
 
