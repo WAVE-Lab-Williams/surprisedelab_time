@@ -28,7 +28,7 @@ Note: PROLIFIC_PID is checked first, then participant_id. Either one will work.
 For more information: https://github.com/WAVE-Lab-Williams/wave-client/
 */
 
-import WaveClient from 'https://cdn.jsdelivr.net/gh/WAVE-Lab-Williams/wave-client@v1.1.0/javascript/dist/wave-client.esm.js';
+import WaveClient from 'https://cdn.jsdelivr.net/gh/WAVE-Lab-Williams/wave-client@v1.2.0/javascript/dist/wave-client.esm.js';
 
 // Extract URL parameters
 const urlParams = new URLSearchParams(window.location.search);
@@ -115,6 +115,51 @@ async function logToWave(data, experiment_id, participant_id) {
     }
 }
 
+// Fetch this experiment's hyperparameters from the WAVE backend and merge them
+// OVER the in-code defaults (window.EXPERIMENT_CONFIG_DEFAULTS from params.js).
+//
+// Resilient by design: if WAVE params are missing (local dev), the backend is
+// unreachable, or the endpoint errors, we silently fall back to the defaults so
+// the experiment always runs. The experimentee-level key (from the URL) is all
+// that's needed to read config.
+async function fetchExperimentConfig() {
+    const defaults = window.EXPERIMENT_CONFIG_DEFAULTS || {};
+
+    if (!waveClient || !EXPERIMENT_ID) {
+        console.log('🎛️ Experiment config: using DEFAULTS (no WAVE backend configured).', defaults);
+        return { ...defaults };
+    }
+
+    let backendConfig = {};
+    try {
+        const response = await waveClient.getExperimentConfig(EXPERIMENT_ID);
+        backendConfig = response.config || {};
+    } catch (error) {
+        console.warn(
+            '⚠️ Experiment config: could not reach backend; using DEFAULTS.',
+            error.message
+        );
+        return { ...defaults };
+    }
+
+    const resolved = { ...defaults, ...backendConfig };
+
+    // Spell out exactly which values the backend overrode vs. which stayed default.
+    const overriddenKeys = Object.keys(backendConfig);
+    console.log('🎛️ Experiment config resolved (defaults + backend overrides):', resolved);
+    if (overriddenKeys.length === 0) {
+        console.log('   ↳ backend set NO overrides — every value is the params.js default.');
+    } else {
+        overriddenKeys.forEach((key) => {
+            console.log(
+                `   ↳ "${key}" OVERRIDDEN by backend: ` +
+                    `${JSON.stringify(defaults[key])} (default) → ${JSON.stringify(backendConfig[key])}`
+            );
+        });
+    }
+    return resolved;
+}
+
 // Enhanced JSPsych data processing
 function processTrialData(data) {
     // Add WAVE-specific standard fields
@@ -159,7 +204,13 @@ function processTrialData(data) {
             stimulus_duration: data.trial_duration,
             time_elapsed: data.time_elapsed,
             timestamp: data.timestamp,
-            user_agent: data.user_agent
+            user_agent: data.user_agent,
+            // Snapshot of the resolved hyperparameters this run used (set on every
+            // row by jsPsych.data.addProperties in timeline.js). Stored so each run
+            // is self-describing even if the experiment's config changes later.
+            // NOTE: your experiment-type schema must include an `experiment_config`
+            // column (TEXT) for this — see the setup notebook's schema.
+            experiment_config: data.experiment_config
         };
 
         logToWave(waveData, data.experiment_id, data.participant_id);
@@ -200,6 +251,7 @@ const waveInitialized = initializeWaveClient();
 window.waveClient = {
     enabled: () => waveEnabled,
     log: logToWave,
+    getConfig: fetchExperimentConfig,
     processTrialData: processTrialData,
     handleCompletion: handleExperimentCompletion
 };
