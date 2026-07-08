@@ -4,7 +4,7 @@ Defining Parameter Variables
 ===============================================================
 */
 
-var stimFolder = 'src/assets/stimuli/window/'
+var stimFolder = 'src/assets/stimuli/people_samebody/'
 
 var runIntro = true;
 var runInstr = true;
@@ -25,7 +25,7 @@ var estTotalRunTime = 6; // was 2 for single trial
 var estDollars = 0.9; // was 0.30 for single trial
 var participantType = 'prolific';
 var completionCode = 'CN955H3L';
-var prolific_url = 'https://app.prolific.co/submissions/complete?cc='+completionCode;
+var prolific_url = 'https://app.prolific.com/submissions/complete?cc='+completionCode;
 
 // WAVE Backend Configuration
 var waveBackendUrl = 'https://wave-backend-production-8781.up.railway.app';
@@ -48,9 +48,15 @@ var h =
     document.documentElement.clientHeight ||
     document.body.clientHeight;
 
+console.log(w,h);
+
 // setting display image width
 var origWidth = 533;
 var origHeight = 400;
+// var origWidth = 560; // for monitor ver
+// var origHeight = 370; // for monitor ver
+// var origWidth = 371; // for samebody ver
+// var origHeight = 228; // for samebody ver
 var imgWidth = origWidth
 var imgHeight = ((imgWidth / origWidth) * origHeight)
 
