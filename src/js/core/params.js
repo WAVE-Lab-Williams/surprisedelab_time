@@ -4,7 +4,7 @@ Defining Parameter Variables
 ===============================================================
 */
 
-var stimFolder = 'src/assets/stimuli/people_samebody/'
+var stimFolder = 'src/assets/stimuli/heads/'
 
 var runIntro = true;
 var runInstr = true;
@@ -12,8 +12,29 @@ var runExpt = true;
 var runClose = true;
 var runPreload = true;
 
-// for reproduce rectangle version
-var rectangleVer = true;
+// // for reproduce rectangle version
+// var rectangleVer = true;
+
+/*
+---------------------------------------------------------------
+Live tunable experiment hyperparameters (Sets Defaults)
+---------------------------------------------------------------
+Sets default DEFAULT values for adjustable experiment variables that may
+later need to change while the experiment is still live.  
+These defaults are used when running locally, or when an 
+experiment has no backend config set. At runtime, the experiment pulls `config` 
+from the WAVE backend (if available) and merges it OVER these defaults 
+(see initExperiment() in timeline.js). A researcher can thus easily change
+a one of these variables (via the setup_experiment.ipynb notebook / API)
+instead of having to edit the file and do PRs.
+
+*/
+var CONFIG_DEFAULTS = {
+    number_of_repetitions: 1,
+    base_people_race: ["A", "B", "L", "W"],
+    base_people_sex: ["F","M"],
+    base_people_variation: ["1","2","3","4"],
+};
 
 // Defining Core Variables that remain constant
 var PRESTIM_DISP_TIME = 700;
@@ -51,10 +72,12 @@ var h =
 console.log(w,h);
 
 // setting display image width
+var origWidth = 533;
+var origHeight = 400;
 // var origWidth = 560; // for monitor ver
 // var origHeight = 370; // for monitor ver
-var origWidth = 371; // for samebody ver
-var origHeight = 228; // for samebody ver
+// var origWidth = 371; // for samebody ver
+// var origHeight = 228; // for samebody ver
 var imgWidth = origWidth
 var imgHeight = ((imgWidth / origWidth) * origHeight)
 

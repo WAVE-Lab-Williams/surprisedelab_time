@@ -55,7 +55,6 @@ def parse_participant_race(r):
     else:
         return base_race
 
-
 def load_environment_variables(env_file_path: str = ".env") -> Tuple[str, Optional[str], str]:
     """Load and validate environment variables."""
     pwd = os.getcwd()
@@ -269,8 +268,15 @@ async def create_experiment(
     researcher_api_key: str,
     wave_backend_url: str,
     additional_data: Optional[Dict[str, Any]] = None,
+    config: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
-    """Create an experiment with the given parameters."""
+    """Create an experiment with the given parameters.
+
+    `config` holds free-form experiment hyperparameters (sample ratios,
+    randomization probabilities, trial counts, timing, ...) that the experiment
+    frontend pulls at runtime and merges over its in-code defaults. Omit it to
+    let the frontend use its defaults.
+    """
     async with WaveClient(api_key=researcher_api_key, base_url=wave_backend_url) as client:
         try:
             if additional_data is None:
@@ -281,6 +287,7 @@ async def create_experiment(
                 description=description,
                 tags=tags,
                 additional_data=additional_data,
+                config=config or {},
             )
             return experiment
 
@@ -292,7 +299,7 @@ async def create_experiment(
 def create_experiment_url(
     base_url: str, 
     experiment_id: str,
-    experimentee_api_key: Optional[str], 
+    experimentee_api_key: Optional[str] = None, 
     participant_id: Optional[str] = None, 
 ) -> Tuple[str, str]:
     """Create full experiment URL with WAVE integration parameters."""

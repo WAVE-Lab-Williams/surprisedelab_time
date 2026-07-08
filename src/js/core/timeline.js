@@ -168,7 +168,7 @@ INSTR PROCEDURE (*sec_instr)
 // // make sure to load any images you need for the demo itself. Usually you have different demo images than the main expt, such that you don't give away the content of the expt itself (but still give the participant practice and familiarity with the task. In this case, though, the demo images themselves are identical to the main expt. Variable names are the only difference.
 var demo_image_race= ["demo"];
 var demo_image_sex= ["gray"]
-var demo_image_variation = ["rectangle"]
+var demo_image_variation = ["head"]
 var demo_display_durations = [2000];
 forPreload.push(`${stimFolder}${demo_image_race}${demo_image_sex}-${demo_image_variation}.png`);
 
@@ -241,49 +241,45 @@ EXPERIMENT SECTION (*sec_expt)
 */
 
 /* -------- defining factors && exptdesign (*factors) --------*/
+// Note: `config` itself isn't resolved until startExperiment() awaits the WAVE
+// backend (*sec_run below), so this just defines how to build `factors` and creates `factorial_design` --
+// it's called from startExperiment() once config is actually available.
+function buildExptDesign(config) {
 
-// var poss_people_race = ["A","B","L","W"]
-// var poss_people_sex = ["M","F"];
-// var poss_people_race = randomChoice(["A","L"], 1)
-var poss_people_race = ["A"]
-var poss_people_sex = ["F","M"];
-var poss_people_variation = ["1","2","3","4"]; // normally is 1-5
-// var poss_people_variation = randomChoice(["1","2","3","4","5"], 2)
-var poss_disp_duration = [500,750,1000,1250,1500];
+    // Expt variables that are not able to change (without PR)
+    var poss_disp_duration = [500,750,1000,1250,1500];
+   
+    // Expt variables that ARE able to change via config, default set in params.js.
+    //      Config numbers arrive as floats, so make sure to read in correctly asInteger/asNumber
+    //      see the helpers in src/js/utils/standard-functions.js.
+    var poss_people_race = randomChoice(asList(config.base_people_race, CONFIG_DEFAULTS.base_people_race), 1)
+    var poss_people_sex = asList(config.base_people_sex, CONFIG_DEFAULTS.base_people_sex);
+    var poss_people_variation = asList(config.base_people_variation, CONFIG_DEFAULTS.base_people_variation);
+    var n_reps = asInteger(config.number_of_repetitions, CONFIG_DEFAULTS.number_of_repetitions);
+   
+    var factors = {
+        people_race: poss_people_race,
+        people_sex: poss_people_sex,
+        people_variation: poss_people_variation,
+        disp_duration: poss_disp_duration
+    }
 
-var factors = {
-    people_race: poss_people_race,
-    people_sex: poss_people_sex,
-    people_variation: poss_people_variation,
-    disp_duration: poss_disp_duration
+    var factorial_design = jsPsych.randomization.factorial(factors, n_reps);
+
+    /* -------  Set Preload Images for Expt (*preload_expt) -------------- */
+    for (var i = 0; i < poss_people_race.length; i++) {
+        for (var j = 0; j < poss_people_sex.length; j++) {
+            for (var k = 0; k < poss_people_variation.length; k++) {
+                forPreload.push(`${stimFolder}${poss_people_race[i]}${poss_people_sex[j]}-${poss_people_variation[k]}.png`);
+            } // end k loop
+        } // end j loop
+    } // end i loop
+
+    return factorial_design
 }
 
-var full_design = jsPsych.randomization.factorial(factors, 1);
-console.log(full_design);
-
-/* -------  Set Preload Images for Expt (*preload_expt) -------------- */
-for (var i = 0; i < poss_people_race.length; i++) {
-    for (var j = 0; j < poss_people_sex.length; j++) {
-        for (var k = 0; k < poss_people_variation.length; k++) {
-            forPreload.push(`${stimFolder}${poss_people_race[i]}${poss_people_sex[j]}-${poss_people_variation[k]}.png`);
-        } // end k loop
-    } // end j loop
-} // end i loop
 
 
-/* ------- timeline expt push (*pushExpt ) -------------- */
-for (var elem = 0; elem < full_design.length; elem++) {
-// for (var elem = 0; elem < 1; elem++) {
-    runSingleTrial(
-        full_design[elem].people_race,
-        full_design[elem].people_sex,
-        full_design[elem].people_variation,
-        full_design[elem].disp_duration,
-        elem,
-        timelineexpt,
-        'expt',
-    );
-}
 
 /*
 ===============================================================
@@ -345,17 +341,62 @@ Run Expt (*sec_run)
 ===============================================================
 */
 
-if (runPreload) {
-    var preload = {
-        type: jsPsychPreload,
-        images: forPreload,
+// The experiment can pull a few settings from the WAVE backend (e.g. how many
+// times to repeat the trial design). Because that's a network request, we wait
+// for it here, then build the trials and start. Everything above this point is
+// plain and editable by hand -- only this run step needs to be async.
+async function startExperiment() {
+
+    // Resolve settings: this experiment's backend config merged over the
+    //    defaults in params.js (falls back to the defaults if WAVE is offline).
+    var config = window.waveClient
+        ? await window.waveClient.getConfig()
+        : CONFIG_DEFAULTS;
+
+    // Save the exact settings used onto every data row, for the record.
+    jsPsych.data.addProperties({ experiment_config: JSON.stringify(config) });
+
+    var full_design = buildExptDesign(config);
+    console.log(full_design);
+
+    /* ------- timeline expt push (*pushExpt ) -------------- */
+    for (var elem = 0; elem < full_design.length; elem++) {
+    // for (var elem = 0; elem < 1; elem++) {
+        runSingleTrial(
+            full_design[elem].people_race,
+            full_design[elem].people_sex,
+            full_design[elem].people_variation,
+            full_design[elem].disp_duration,
+            elem,
+            timelineexpt,
+            'expt',
+        );
     }
-    timelinebase = timelinebase.concat(preload);
+
+    // Assemble the timeline (toggle sections with the run* flags in params.js).
+    if (runPreload) {
+        var preload = {
+            type: jsPsychPreload,
+            images: forPreload,
+            auto_preload: true,
+            show_detailed_errors: true,
+            on_error: function(file) {
+                console.log('Error: ',file);
+            },
+            on_success: function(file) {
+                console.log('Success: ',file);
+            },
+            message: 'Please wait while the experiment loads...'
+        }
+        timelinebase = timelinebase.concat(preload);
+    }
+    if (runIntro) { timelinebase = timelinebase.concat(timelineintro) }
+    if (runInstr) { timelinebase = timelinebase.concat(timelineinstr) }
+    if (runExpt) { timelinebase = timelinebase.concat(timelineexpt) }
+    if (runClose) { timelinebase = timelinebase.concat(timelineclose) }
+
+    jsPsych.run(timelinebase);
 }
 
-if (runIntro) { timelinebase = timelinebase.concat(timelineintro) }
-if (runInstr) { timelinebase = timelinebase.concat(timelineinstr) }
-if (runExpt) { timelinebase = timelinebase.concat(timelineexpt) }
-if (runClose) { timelinebase = timelinebase.concat(timelineclose) }
-
-jsPsych.run(timelinebase);
+// Start once the page (and the WAVE client module) have loaded.
+window.addEventListener('DOMContentLoaded', startExperiment);
