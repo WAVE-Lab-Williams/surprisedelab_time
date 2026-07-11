@@ -4,7 +4,8 @@ Defining Parameter Variables
 ===============================================================
 */
 
-var stimFolder = 'src/assets/stimuli/heads/'
+var stimFolder = 'src/assets/stimuli/femalebody/'
+// 'src/assets/stimuli/heads/' ## change to comment in correct path
 
 var runIntro = true;
 var runInstr = true;
@@ -72,8 +73,10 @@ var h =
 console.log(w,h);
 
 // setting display image width
-var origWidth = 533;
-var origHeight = 400;
+var origWidth = 252; // for female body ver 
+var origHeight = 545; // for female body ver 
+// var origWidth = 533; // for heads only ver 
+// var origHeight = 400; // for heads only ver 
 // var origWidth = 560; // for monitor ver
 // var origHeight = 370; // for monitor ver
 // var origWidth = 371; // for samebody ver
