@@ -32,7 +32,7 @@ instead of having to edit the file and do PRs.
 */
 var CONFIG_DEFAULTS = {
     number_of_repetitions: 1,
-    base_people_race: ["A", "B", "L", "W"],
+    base_people_race: ["W"],
     base_people_sex: ["F","M"],
     base_people_variation: ["1","2","3","4"],
 };
