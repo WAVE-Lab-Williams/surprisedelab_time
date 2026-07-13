@@ -123,7 +123,7 @@ async function logToWave(data, experiment_id, participant_id) {
 // the experiment always runs. The experimentee-level key (from the URL) is all
 // that's needed to read config.
 async function fetchExperimentConfig() {
-    const defaults = window.EXPERIMENT_CONFIG_DEFAULTS || {};
+    const defaults = window.CONFIG_DEFAULTS || {};
 
     if (!waveClient || !EXPERIMENT_ID) {
         console.log('🎛️ Experiment config: using DEFAULTS (no WAVE backend configured).', defaults);
