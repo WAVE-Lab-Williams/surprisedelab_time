@@ -30,11 +30,12 @@ a one of these variables (via the setup_experiment.ipynb notebook / API)
 instead of having to edit the file and do PRs.
 
 */
-var CONFIG_DEFAULTS = {
+var CONFIG_DEFAULTS = { //WITHOUT PR CAN CHANGE
     number_of_repetitions: 1,
     base_people_race: ["W"],
     base_people_sex: ["F","M"],
     base_people_variation: ["1","2","3","4"],
+    base_people_rotation: [0, 180]
 };
 
 // Defining Core Variables that remain constant
