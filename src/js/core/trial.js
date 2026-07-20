@@ -69,10 +69,10 @@ function runSingleTrial(
         var screenside_category = "Error"
     }
     // logs where the stim actually are on the screen
-    console.log("Stimulus:", thisStim);
-    console.log("X position:", target_x_random);
-    console.log("Y position:", target_y_random);
-    console.log("Screen side:", screenside_category);
+    // console.log("Stimulus:", thisStim);
+    // console.log("X position:", target_x_random);
+    // console.log("Y position:", target_y_random);
+    // console.log("Screen side:", screenside_category);
 
     // console.log(w)
     // console.log(`Where the left of the image will be positioned target_x_random: ${target_x_random}`)
