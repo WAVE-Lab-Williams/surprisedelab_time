@@ -35,7 +35,7 @@ var CONFIG_DEFAULTS = { //WITHOUT PR CAN CHANGE
     base_people_race: ["W"],
     base_people_sex: ["F","M"],
     base_people_variation: ["1","2","3","4"],
-    base_people_rotation: [0, 180]
+    base_people_rotation: [180]
 };
 
 // Defining Core Variables that remain constant
