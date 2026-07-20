@@ -170,6 +170,7 @@ var demo_image_race= ["demo"];
 var demo_image_sex= ["gray"];
 var demo_image_variation = ["body"];
 var demo_display_durations = [2000];
+var demo_image_rotation = [0];
 forPreload.push(`${stimFolder}${demo_image_race}${demo_image_sex}-${demo_image_variation}.png`);
 
 //decide what the parameters for the demo trial should be. Sometimes you hardcode this, sometimes you randomly choose from the options you defined above.
@@ -229,7 +230,14 @@ var instructions_postcut = {
 };
 
 timelineinstr.push(instructions_precut);
-runSingleTrial(demo_image_race,demo_image_sex,demo_image_variation,thisDemoDispDuration,0,timelineinstr,"prac") // pushesyour demo trial
+runSingleTrial(demo_image_race,
+    demo_image_sex,
+    demo_image_variation,
+    demo_image_rotation,
+    thisDemoDispDuration,
+    0,
+    timelineinstr,
+    "prac") // pushesyour demo trial
 timelineinstr.push(instructions_postcut);
 
 

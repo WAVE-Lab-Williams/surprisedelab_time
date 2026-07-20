@@ -153,7 +153,7 @@ function runSingleTrial(
 
     var dispImg = {
         type: jsPsychHtmlKeyboardResponse,
-        stimulus: `<div style="rotate:${personRotation}px XXXXXXXXX position: absolute; top: ${target_y_random}px; right: ${target_x_random}px;">`+
+        stimulus: `<div style="rotate:${personRotation}deg; position: absolute; top: ${target_y_random}px; left: ${target_x_random}px;">`+
             `<img src="${thisStim}" style="width:${target_width}px;" />` + 
             `</div>`,
         choices: "NO_KEYS",

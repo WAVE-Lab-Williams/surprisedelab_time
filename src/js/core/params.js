@@ -69,9 +69,9 @@ var w =
 var h =
     window.innerHeight ||
     document.documentElement.clientHeight ||
-    document.body.clientHeight;
+    document.body.clientHeight
 
-console.log(w,h);
+// console.log(w,h);
 
 // setting display image width
 var origWidth = 252; // for female body ver 
