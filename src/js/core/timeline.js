@@ -170,6 +170,7 @@ var demo_image_race= ["demo"];
 var demo_image_sex= ["gray"];
 var demo_image_variation = ["body"];
 var demo_display_durations = [2000];
+var demo_image_rotation = [180];
 forPreload.push(`${stimFolder}${demo_image_race}${demo_image_sex}-${demo_image_variation}.png`);
 
 //decide what the parameters for the demo trial should be. Sometimes you hardcode this, sometimes you randomly choose from the options you defined above.
@@ -229,7 +230,14 @@ var instructions_postcut = {
 };
 
 timelineinstr.push(instructions_precut);
-runSingleTrial(demo_image_race,demo_image_sex,demo_image_variation,thisDemoDispDuration,0,timelineinstr,"prac") // pushesyour demo trial
+runSingleTrial(demo_image_race,
+    demo_image_sex,
+    demo_image_variation,
+    demo_image_rotation,
+    thisDemoDispDuration,
+    0,
+    timelineinstr,
+    "prac") // pushesyour demo trial
 timelineinstr.push(instructions_postcut);
 
 
@@ -248,6 +256,7 @@ function buildExptDesign(config) {
 
     // Expt variables that are not able to change (without PR)
     var poss_disp_duration = [500,750,1000,1250,1500];
+    // var poss_disp_duration = [500, 1375, 2250, 3125, 4000]; // increment by 875
    
     // Expt variables that ARE able to change via config, default set in params.js.
     //      Config numbers arrive as floats, so make sure to read in correctly asInteger/asNumber
@@ -255,13 +264,15 @@ function buildExptDesign(config) {
     var poss_people_race = randomChoice(asList(config.base_people_race, CONFIG_DEFAULTS.base_people_race), 1)
     var poss_people_sex = asList(config.base_people_sex, CONFIG_DEFAULTS.base_people_sex);
     var poss_people_variation = asList(config.base_people_variation, CONFIG_DEFAULTS.base_people_variation);
+    var poss_people_rotation = asList(config.base_people_rotation, CONFIG_DEFAULTS.base_people_rotation);
     var n_reps = asInteger(config.number_of_repetitions, CONFIG_DEFAULTS.number_of_repetitions);
    
     var factors = {
         people_race: poss_people_race,
         people_sex: poss_people_sex,
         people_variation: poss_people_variation,
-        disp_duration: poss_disp_duration
+        disp_duration: poss_disp_duration,
+        people_rotation: poss_people_rotation
     }
 
     var factorial_design = jsPsych.randomization.factorial(factors, n_reps);
@@ -360,13 +371,17 @@ async function startExperiment() {
     console.log(full_design);
 
     /* ------- timeline expt push (*pushExpt ) -------------- */
+    var jitter;
     for (var elem = 0; elem < full_design.length; elem++) {
     // for (var elem = 0; elem < 1; elem++) {
+        jitter = randomChoice([-100,-50, 0, 50, 100], 1)[0]; // jitter for the 500-1500 range
+        // jitter = randomChoice([-400,-200, 0, 200, 400], 1)[0]; // jitter for the 500-1500 range
         runSingleTrial(
             full_design[elem].people_race,
             full_design[elem].people_sex,
             full_design[elem].people_variation,
-            full_design[elem].disp_duration,
+            full_design[elem].people_rotation,
+            full_design[elem].disp_duration+jitter,
             elem,
             timelineexpt,
             'expt',
