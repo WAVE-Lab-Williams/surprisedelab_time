@@ -196,6 +196,7 @@ function processTrialData(data) {
             person_race: data.person_race,
             person_sex: data.person_sex,
             person_variation: data.person_variation,
+            person_rotation: data.person_rotation,
             person_disp_duration: data.person_disp_duration,
             screenside_category: data.screenside_category,
             target_x_position: data.target_x_position,

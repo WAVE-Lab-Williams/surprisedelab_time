@@ -7,6 +7,7 @@ function runSingleTrial(
     personRace,
     personSex,
     personVariation,
+    personRotation,
     dispDuration,
     trueTrialCount,
     timelineTrialsToPush,
@@ -68,10 +69,10 @@ function runSingleTrial(
         var screenside_category = "Error"
     }
     // logs where the stim actually are on the screen
-    console.log("Stimulus:", thisStim);
-    console.log("X position:", target_x_random);
-    console.log("Y position:", target_y_random);
-    console.log("Screen side:", screenside_category);
+    // console.log("Stimulus:", thisStim);
+    // console.log("X position:", target_x_random);
+    // console.log("Y position:", target_y_random);
+    // console.log("Screen side:", screenside_category);
 
     // console.log(w)
     // console.log(`Where the left of the image will be positioned target_x_random: ${target_x_random}`)
@@ -94,6 +95,7 @@ function runSingleTrial(
             person_race: personRace,
             person_sex: personSex,
             person_variation: personVariation,
+            person_rotation: personRotation,
             person_disp_duration: dispDuration,
             target_x_position: target_x_random,
             target_y_position: target_y_random,
@@ -118,6 +120,7 @@ function runSingleTrial(
             person_race: personRace,
             person_sex: personSex,
             person_variation: personVariation,
+            person_rotation: personRotation,
             person_disp_duration: dispDuration,
             target_x_position: target_x_random,
             target_y_position: target_y_random,
@@ -152,7 +155,7 @@ function runSingleTrial(
 
     var dispImg = {
         type: jsPsychHtmlKeyboardResponse,
-        stimulus: `<div style="position: absolute; top: ${target_y_random}px; right: ${target_x_random}px;">`+
+        stimulus: `<div style="rotate:${personRotation}deg; position: absolute; top: ${target_y_random}px; left: ${target_x_random}px;">`+
             `<img src="${thisStim}" style="width:${target_width}px;" />` + 
             `</div>`,
         choices: "NO_KEYS",
