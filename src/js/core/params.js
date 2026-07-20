@@ -69,7 +69,7 @@ var w =
 var h =
     window.innerHeight ||
     document.documentElement.clientHeight ||
-    document.body.clientHeight
+    document.body.clientHeight;
 
 // console.log(w,h);
 
