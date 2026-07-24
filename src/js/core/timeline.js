@@ -168,9 +168,9 @@ INSTR PROCEDURE (*sec_instr)
 // // make sure to load any images you need for the demo itself. Usually you have different demo images than the main expt, such that you don't give away the content of the expt itself (but still give the participant practice and familiarity with the task. In this case, though, the demo images themselves are identical to the main expt. Variable names are the only difference.
 var demo_image_race= ["demo"];
 var demo_image_sex= ["gray"];
-var demo_image_variation = ["body"];
+var demo_image_variation = ["head"];
 var demo_display_durations = [2000];
-var demo_image_rotation = [180];
+var demo_image_rotation = [0];
 forPreload.push(`${stimFolder}${demo_image_race}${demo_image_sex}-${demo_image_variation}.png`);
 
 //decide what the parameters for the demo trial should be. Sometimes you hardcode this, sometimes you randomly choose from the options you defined above.
