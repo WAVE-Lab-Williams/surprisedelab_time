@@ -12,6 +12,7 @@ var runInstr = true;
 var runExpt = true;
 var runClose = true;
 var runPreload = true;
+var runStaticImgDisp = true;
 
 // // for reproduce rectangle version
 // var rectangleVer = true;
@@ -84,7 +85,7 @@ var origHeight = 1200; // for window ver
 // var origHeight = 370; // for monitor ver
 // var origWidth = 371; // for samebody ver
 // var origHeight = 228; // for samebody ver
-var imgWidth = origWidth
+var imgWidth = 1000;
 var imgHeight = ((imgWidth / origWidth) * origHeight)
 
 

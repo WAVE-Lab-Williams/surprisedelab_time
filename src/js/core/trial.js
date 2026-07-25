@@ -51,21 +51,20 @@ function runSingleTrial(
     /*--------------------------- Experiment specific variables ---------------------------*/
     var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`
     
-    /* target image size */
-    // let tar_size = randomIntFromRange(40, 100);
-    let tar_size =100;
-    let resize_decimal = tar_size*.01;
-    let target_width = Math.floor(imgWidth * resize_decimal);
-    let target_height = Math.floor(imgHeight * resize_decimal);
+    if (runStaticImgDisp){
+        var target_x_random = (w/2)-(imgWidth/2); // forces middle of the screen, accounts for any size of the image
+        var target_y_random = (h/2)-(imgHeight/2)-(imgHeight/3); // forces middle of screen, but because h is a variable that captured before forced full screen runs, it has all the tabs and junk pushing the "center" of the screen down. So I've built in a 1/3rd of height of img buffer. NOTE: Because this buffer is hardcoded, this may encounter issues in future versions, especially if the image is especially vertically elongated. A good programmer would take time to solve this possible future incompatibility. 
+        /* randomize location of the target image, and also categorize where that location is */
+    } else {
+        var target_x_random = randomIntFromRange(100, w-100-imgWidth); // accounts for img dims to not go off screen
+        var target_y_random = randomIntFromRange(50, h-50-imgHeight)-(imgHeight/3); // see above for why we include 1/3rd height of img buffer just for y_position
+    }
 
-    let target_x_random = randomIntFromRange(100, w-100-target_width); // accounts for img dims to not go off screen
-    let target_y_random = randomIntFromRange(50, h-50-target_height);
-    // let target_x_random = randomIntFromRange(0 - target_width);
-    // let target_y_random = h - target_height;
-
-    if (target_x_random < w/2) {
+    if (runStaticImgDisp) {
+        var screenside_category = "Static Middle"
+    } else if ( (target_x_random+imgWidth/2) < w/2) {
         var screenside_category = "L"
-    } else if (target_x_random >= w/2) {
+    } else if ( (target_x_random+imgWidth/2) >= w/2) {
         var screenside_category = "R"
     } else {
         var screenside_category = "Error"
@@ -87,7 +86,7 @@ function runSingleTrial(
     var holdResponse = {
         type: jsPsychHtmlButtonSpaceHoldResponse,
         // stimulus: `Now please try to <b>reproduce how long</b> the image stayed on screen. Click and hold down the button below for the same amount of time that you saw the image. <p>Releasing the button will <b>automatically submit</b> your response!</p><p>You have <b>only ONE try!</b></p>`,
-        stimulus: `Now try to replicate how long the figure was on the screen (Use the <u>Spacebar</u>):`,
+        stimulus: `Now try to replicate how long the image was on the screen (Use the <u>Spacebar</u>):`,
         choices: ["Click, hold, and release the Spacebar for the right amount of time!"],
         show_hold_duration_feedback: false,
         retries_allowed: null, // change to a number of allowed retries. Default is null.
@@ -100,8 +99,8 @@ function runSingleTrial(
             person_variation: personVariation,
             person_rotation: personRotation,
             person_disp_duration: dispDuration,
-            target_x_position: target_x_random,
-            target_y_position: target_y_random,
+            target_x_position: target_x_random, // recall that this is left of image
+            target_y_position: target_y_random, // recall that this is top of image
             true_trial_count: trueTrialCount,
             screenside_category: screenside_category,
         }, // data end
@@ -125,8 +124,8 @@ function runSingleTrial(
             person_variation: personVariation,
             person_rotation: personRotation,
             person_disp_duration: dispDuration,
-            target_x_position: target_x_random,
-            target_y_position: target_y_random,
+            target_x_position: target_x_random, // recall that this is left of image
+            target_y_position: target_y_random, // recall that this is top of image
             choice_array_order: choiceArray,
         },
         on_finish: function(data){
@@ -157,10 +156,10 @@ function runSingleTrial(
     };
 
     var dispImg = {
-        type: jsPsychHtmlKeyboardResponse,
-        stimulus:    
-        `<img src="${thisStim}" style="position: fixed; inset: 0; left: 0; width: 100vw; height: 100vh; object-fit: contain;" />` +
-        `</div>`,
+        type: jsPsychHtmlKeyboardResponse,    
+        stimulus: `<div style="rotate:${personRotation}deg; position: absolute; top: ${target_y_random}px; left: ${target_x_random}px;">`+
+            `<img src="${thisStim}" style="width:${imgWidth}px;" />` + 
+            `</div>`,
         choices: "NO_KEYS",
         trial_duration: dispDuration,
         // prompt: `${persistent_prompt}`,
