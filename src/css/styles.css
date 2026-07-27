@@ -8,7 +8,7 @@
  @import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
 
 /* Container holding jsPsych content */
-    /* body {background-color: #b5b5b5;} */
+body {background-color: #959499;}
 
 /* regular rotation*/
 .rotate90 {
