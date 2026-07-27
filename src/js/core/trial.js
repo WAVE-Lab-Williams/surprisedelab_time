@@ -53,7 +53,7 @@ function runSingleTrial(
     
     if (runStaticImgDisp){
         var target_x_random = (w/2)-(imgWidth/2); // forces middle of the screen, accounts for any size of the image
-        var target_y_random = (h/2)-(imgHeight/2)-(imgHeight/3); // forces middle of screen, but because h is a variable that captured before forced full screen runs, it has all the tabs and junk pushing the "center" of the screen down. So I've built in a 1/3rd of height of img buffer. NOTE: Because this buffer is hardcoded, this may encounter issues in future versions, especially if the image is especially vertically elongated. A good programmer would take time to solve this possible future incompatibility. 
+        var target_y_random = (h/2)-(imgHeight/2)-(imgHeight/4); // forces middle of screen, but because h is a variable that captured before forced full screen runs, it has all the tabs and junk pushing the "center" of the screen down. So I've built in a 1/3rd of height of img buffer. NOTE: Because this buffer is hardcoded, this may encounter issues in future versions, especially if the image is especially vertically elongated. A good programmer would take time to solve this possible future incompatibility. 
         /* randomize location of the target image, and also categorize where that location is */
     } else {
         var target_x_random = randomIntFromRange(100, w-100-imgWidth); // accounts for img dims to not go off screen
