@@ -78,14 +78,14 @@ var h =
 // var origWidth = 252; // for female body ver 
 // var origHeight = 545; // for female body ver 
 var origWidth = 3200; // for window ver
-var origHeight = 1200; // for window ver
+var origHeight = 1950; // for window ver
 // var origWidth = 533; // for heads only ver 
 // var origHeight = 400; // for heads only ver 
 // var origWidth = 560; // for monitor ver
 // var origHeight = 370; // for monitor ver
 // var origWidth = 371; // for samebody ver
 // var origHeight = 228; // for samebody ver
-var imgWidth = 1000;
+var imgWidth = 1200;
 var imgHeight = ((imgWidth / origWidth) * origHeight)
 
 
