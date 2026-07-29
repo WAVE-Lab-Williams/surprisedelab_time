@@ -52,12 +52,15 @@ function runSingleTrial(
     
     var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`
 
+    // Set inside dispImg's stimulus function (JSPsych only knows w/h at render time),
+    // then read by dispImg's own on_finish and by later trials in this same call.
+    var target_x_random, target_y_random, screenside_category;
+
     var dispImg = {
-        type: jsPsychHtmlKeyboardResponse,    
+        type: jsPsychHtmlKeyboardResponse,
         stimulus: function(){
             var w = window.innerWidth;
             var h = window.innerHeight;
-            var target_x_random, target_y_random, screenside_category;
 
             if (runStaticImgDisp){
                 target_x_random = (w/2) - (imgWidth/2); // middle of screen with new live w values
@@ -75,14 +78,10 @@ function runSingleTrial(
                 }
             }
 
-            x_value = target_x_random;
-            y_value = target_y_random;
-            screenside_value = screenside_category;
-            
         return `<div style="rotate:${personRotation}deg; position: fixed; top: ${target_y_random}px; left: ${target_x_random}px;">`+
-            `<img src="${thisStim}" style="width:${imgWidth}px; height:${imgHeight}px;" />` + 
-            `</div>`; 
-        }, // end style 
+            `<img src="${thisStim}" style="width:${imgWidth}px; height:${imgHeight}px;" />` +
+            `</div>`;
+        }, // end style
         choices: "NO_KEYS",
         trial_duration: dispDuration,
         // prompt: `${persistent_prompt}`,
@@ -93,6 +92,12 @@ function runSingleTrial(
             // target_width: target_width,
             // target_height: target_height,
         }, // data end
+        on_finish: function(data){
+            data.target_x_position = target_x_random;
+            data.target_y_position = target_y_random;
+            data.screenside_category = screenside_category;
+            console.log(`[${data.trial_category}] x: ${data.target_x_position}, y: ${data.target_y_position}, side: ${data.screenside_category}`);
+        } // on finish end
     }; // dispImg end
 
     // logs where the stim actually are on the screen
@@ -132,9 +137,10 @@ function runSingleTrial(
         }, // data end
         on_finish: function(data){
             data.thisDifference = data.hold_duration - data.correct_response
-            data.target_x_position = x_value; 
-            data.target_y_position = y_value;
-            data.screenside_category = screenside_value; 
+            data.target_x_position = target_x_random;
+            data.target_y_position = target_y_random;
+            data.screenside_category = screenside_category;
+            console.log(`[${data.trial_category}] x: ${data.target_x_position}, y: ${data.target_y_position}, side: ${data.screenside_category}`);
         } // on finish end
     }; // holdResponse end
 
@@ -158,9 +164,10 @@ function runSingleTrial(
             choice_array_order: choiceArray,
         },
         on_finish: function(data){
-            data.target_x_position = x_value; 
-            data.target_y_position = y_value;
-            data.screenside_category = screenside_value;
+            data.target_x_position = target_x_random;
+            data.target_y_position = target_y_random;
+            data.screenside_category = screenside_category;
+            console.log(`[${data.trial_category}] x: ${data.target_x_position}, y: ${data.target_y_position}, side: ${data.screenside_category}`);
             // console.log(data.response)
             // console.log(choiceArray)
             // console.log(choiceArray[parseInt(data.response,10)])
@@ -242,7 +249,7 @@ function runSingleTrial(
     timelineTrialsToPush.push(poststim)
     timelineTrialsToPush.push(cursor_on);
     timelineTrialsToPush.push(holdResponse);
-    if (attn_trial_list.includes (trueTrialCount)){
+    if (attn_trial_list.includes(trueTrialCount)){
         timelineTrialsToPush.push(attnTrial); 
     };
 
