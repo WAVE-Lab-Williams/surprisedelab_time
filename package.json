@@ -4,7 +4,7 @@
   "description": "JSPsych experiment template with WAVE client integration",
   "type": "module",
   "scripts": {
-    "dev": "http-server -p 8080 -c-1",
+    "dev": "http-server -p 8080",
     "start": "npm run dev",
     "lint": "eslint 'src/**/*.js'",
     "lint:fix": "eslint 'src/**/*.js' --fix"

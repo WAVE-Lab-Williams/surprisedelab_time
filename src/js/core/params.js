@@ -4,7 +4,7 @@ Defining Parameter Variables
 ===============================================================
 */
 
-var stimFolder = 'src/assets/stimuli/femalebody/'
+var stimFolder = 'src/assets/stimuli/window_fixed/'
 // 'src/assets/stimuli/heads/' ## change to comment in correct path
 
 var runIntro = true;
@@ -12,6 +12,7 @@ var runInstr = true;
 var runExpt = true;
 var runClose = true;
 var runPreload = true;
+var runStaticImgDisp = true;
 
 // // for reproduce rectangle version
 // var rectangleVer = true;
@@ -35,7 +36,7 @@ var CONFIG_DEFAULTS = { //WITHOUT PR CAN CHANGE
     base_people_race: ["W"],
     base_people_sex: ["F","M"],
     base_people_variation: ["1","2","3","4"],
-    base_people_rotation: [180]
+    base_people_rotation: [0]
 };
 
 // Defining Core Variables that remain constant
@@ -74,15 +75,17 @@ var h =
 // console.log(w,h);
 
 // setting display image width
-var origWidth = 252; // for female body ver 
-var origHeight = 545; // for female body ver 
+// var origWidth = 252; // for female body ver 
+// var origHeight = 545; // for female body ver 
+var origWidth = 3200; // for window ver
+var origHeight = 1950; // for window ver
 // var origWidth = 533; // for heads only ver 
 // var origHeight = 400; // for heads only ver 
 // var origWidth = 560; // for monitor ver
 // var origHeight = 370; // for monitor ver
 // var origWidth = 371; // for samebody ver
 // var origHeight = 228; // for samebody ver
-var imgWidth = origWidth
+var imgWidth = 1200;
 var imgHeight = ((imgWidth / origWidth) * origHeight)
 
 
