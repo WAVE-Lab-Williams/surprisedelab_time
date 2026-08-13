@@ -249,9 +249,9 @@ function runSingleTrial(
     timelineTrialsToPush.push(poststim)
     timelineTrialsToPush.push(cursor_on);
     timelineTrialsToPush.push(holdResponse);
-    if (attn_trial_list.includes(trueTrialCount)){
-        timelineTrialsToPush.push(attnTrial); 
-    };
+    // if (attn_trial_list.includes(trueTrialCount)){
+    //     timelineTrialsToPush.push(attnTrial); 
+    // };
 
 };
 

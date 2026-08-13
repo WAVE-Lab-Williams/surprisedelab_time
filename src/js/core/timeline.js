@@ -167,8 +167,8 @@ INSTR PROCEDURE (*sec_instr)
 
 // // make sure to load any images you need for the demo itself. Usually you have different demo images than the main expt, such that you don't give away the content of the expt itself (but still give the participant practice and familiarity with the task. In this case, though, the demo images themselves are identical to the main expt. Variable names are the only difference.
 var demo_image_race= ["demo"];
-var demo_image_sex= ["gray"];
-var demo_image_variation = ["head"];
+var demo_image_sex= ["rectangle"];
+var demo_image_variation = ["black"];
 var demo_display_durations = [2000];
 var demo_image_rotation = [0];
 forPreload.push(`${stimFolder}${demo_image_race}${demo_image_sex}-${demo_image_variation}.png`);
@@ -261,8 +261,10 @@ function buildExptDesign(config) {
     // Expt variables that ARE able to change via config, default set in params.js.
     //      Config numbers arrive as floats, so make sure to read in correctly asInteger/asNumber
     //      see the helpers in src/js/utils/standard-functions.js.
-    var poss_people_race = randomChoice(asList(config.base_people_race, CONFIG_DEFAULTS.base_people_race), 1)
-    var poss_people_sex = asList(config.base_people_sex, CONFIG_DEFAULTS.base_people_sex);
+    var poss_people_race = (asList(config.base_people_race, CONFIG_DEFAULTS.base_people_race));
+    var poss_people_sex = randomChoice(asList(config.base_people_sex, CONFIG_DEFAULTS.base_people_sex),1); 
+    // people_sex is set as the shape type, will show ONE type of shape per each participant, remove randomChoice 
+    // if we want each participant to see every shape
     var poss_people_variation = asList(config.base_people_variation, CONFIG_DEFAULTS.base_people_variation);
     var poss_people_rotation = asList(config.base_people_rotation, CONFIG_DEFAULTS.base_people_rotation);
     var n_reps = asInteger(config.number_of_repetitions, CONFIG_DEFAULTS.number_of_repetitions);
