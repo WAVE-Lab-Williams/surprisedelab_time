@@ -4,7 +4,7 @@ Defining Parameter Variables
 ===============================================================
 */
 
-var stimFolder = 'src/assets/stimuli/window_fixed/'
+var stimFolder = 'src/assets/stimuli/shapes/'
 // 'src/assets/stimuli/heads/' ## change to comment in correct path
 
 var runIntro = true;
@@ -12,7 +12,7 @@ var runInstr = true;
 var runExpt = true;
 var runClose = true;
 var runPreload = true;
-var runStaticImgDisp = true;
+var runStaticImgDisp = false; // set to false if randomizing img location
 
 // // for reproduce rectangle version
 // var rectangleVer = true;
@@ -32,10 +32,10 @@ instead of having to edit the file and do PRs.
 
 */
 var CONFIG_DEFAULTS = { //WITHOUT PR CAN CHANGE
-    number_of_repetitions: 1,
-    base_people_race: ["W"],
-    base_people_sex: ["F","M"],
-    base_people_variation: ["1","2","3","4"],
+    number_of_repetitions: 3, // number of times each is passed through, 30 trials resulting from 3 
+    base_people_race: ["red", "gray"],
+    base_people_sex: ["rectangle","oval","rounded", "triangle"],
+    base_people_variation: ["1"],
     base_people_rotation: [0]
 };
 
@@ -77,15 +77,18 @@ var h =
 // setting display image width
 // var origWidth = 252; // for female body ver 
 // var origHeight = 545; // for female body ver 
-var origWidth = 3200; // for window ver
-var origHeight = 1950; // for window ver
+// var origWidth = 3200; // for window ver
+// var origHeight = 1950; // for window ver
 // var origWidth = 533; // for heads only ver 
 // var origHeight = 400; // for heads only ver 
 // var origWidth = 560; // for monitor ver
 // var origHeight = 370; // for monitor ver
 // var origWidth = 371; // for samebody ver
 // var origHeight = 228; // for samebody ver
-var imgWidth = 1200;
+var origWidth = 164; // for red rectangle ver
+var origHeight = 545; // for red rectangle ver
+
+var imgWidth = 164;
 var imgHeight = ((imgWidth / origWidth) * origHeight)
 
 
