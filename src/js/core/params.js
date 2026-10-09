@@ -4,7 +4,7 @@ Defining Parameter Variables
 ===============================================================
 */
 
-var stimFolder = 'src/assets/stimuli/window_fixed/'
+var stimFolder = 'src/assets/stimuli/waist_only/'
 // 'src/assets/stimuli/heads/' ## change to comment in correct path
 
 var runIntro = true;
@@ -12,7 +12,7 @@ var runInstr = true;
 var runExpt = true;
 var runClose = true;
 var runPreload = true;
-var runStaticImgDisp = true;
+var runStaticImgDisp = false;
 
 // // for reproduce rectangle version
 // var rectangleVer = true;
@@ -77,15 +77,18 @@ var h =
 // setting display image width
 // var origWidth = 252; // for female body ver 
 // var origHeight = 545; // for female body ver 
-var origWidth = 3200; // for window ver
-var origHeight = 1950; // for window ver
+// var origWidth = 3200; // for window ver
+// var origHeight = 1950; // for window ver
 // var origWidth = 533; // for heads only ver 
 // var origHeight = 400; // for heads only ver 
 // var origWidth = 560; // for monitor ver
 // var origHeight = 370; // for monitor ver
 // var origWidth = 371; // for samebody ver
 // var origHeight = 228; // for samebody ver
-var imgWidth = 1200;
+var origWidth = 250; // for waist-up ver
+var origHeight = 260; // for waist-up ver 
+
+var imgWidth = 2 * (origWidth);
 var imgHeight = ((imgWidth / origWidth) * origHeight)
 
 
