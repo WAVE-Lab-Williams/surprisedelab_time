@@ -267,6 +267,17 @@
    outline: none;
  }
 
+ /* Hide the text caret (e.g., from browser caret browsing / F7) except in form fields */
+ .jspsych-display-element,
+ .jspsych-display-element * {
+   caret-color: transparent;
+ }
+
+ .jspsych-display-element input,
+ .jspsych-display-element textarea {
+   caret-color: auto;
+ }
+
  .jspsych-content-wrapper {
    display: flex;
    margin: auto;
